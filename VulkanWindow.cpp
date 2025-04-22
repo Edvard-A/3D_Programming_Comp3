@@ -223,38 +223,32 @@ void VulkanWindow::handleInput()
 
 
     // Camera independent movement
-    if(mInput.RMB)
-    {
-        if (mInput.Q)
-            mCamera->updateHeigth(mCameraSpeed);
-        if (mInput.E)
-            mCamera->updateHeigth(-mCameraSpeed);
-    } else{
+
         if (mInput.W)
-            mCamera->setSpeed(mCameraSpeed);
+            mCamera->updateHeigth(-mCameraSpeed);
         if (mInput.S)
-            mCamera->setSpeed(-mCameraSpeed);
+            mCamera->updateHeigth(mCameraSpeed);
         if (mInput.D)
             mCamera->moveRight(-mCameraSpeed);
         if (mInput.A)
             mCamera->moveRight(mCameraSpeed);
-    }
+
 
 
     // PLAYER MOVEMENT
 
     // Using the camera movement to make them move within the same constraints
     if (mInput.W)
-        dynamic_cast<Renderer*>(mRenderer)->mObjects.at(2)->move(0.0f, 0.f, -mCameraSpeed);
+        dynamic_cast<Renderer*>(mRenderer)->mObjects.at(2)->move(0.0f, mCameraSpeed);
     //dynamic_cast<Renderer*>(mRenderer)->mObjects.at(2)->rotate(0, 0, 0, 0);
     if (mInput.S)
-        dynamic_cast<Renderer*>(mRenderer)->mObjects.at(2)->move(0.0f, 0.f, mCameraSpeed);
+        dynamic_cast<Renderer*>(mRenderer)->mObjects.at(2)->move(0.0f, -mCameraSpeed);
     //dynamic_cast<Renderer*>(mRenderer)->mObjects.at(2)->rotate(180, 0, 0, 0);
     if (mInput.D)
-        dynamic_cast<Renderer*>(mRenderer)->mObjects.at(2)->move(mCameraSpeed, 0.f, 0.0f);
+        dynamic_cast<Renderer*>(mRenderer)->mObjects.at(2)->move(mCameraSpeed, 0.0f);
     //dynamic_cast<Renderer*>(mRenderer)->mObjects.at(2)->rotate(90, 0, 0, 0);
     if (mInput.A)
-        dynamic_cast<Renderer*>(mRenderer)->mObjects.at(2)->move(-mCameraSpeed, 0.f, 0.0f);
+        dynamic_cast<Renderer*>(mRenderer)->mObjects.at(2)->move(-mCameraSpeed, 0.0f);
     //dynamic_cast<Renderer*>(mRenderer)->mObjects.at(2)->rotate(270, 0, 0, 0);
     //if (mInput.Q)
     //    dynamic_cast<Renderer*>(mRenderer)->mObjects.at(2)->move(-0.1f);
