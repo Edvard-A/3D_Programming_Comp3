@@ -204,8 +204,8 @@ void VulkanWindow::mouseMoveEvent(QMouseEvent *event)
         mMouseXlast = event->pos().x() - mMouseXlast;
         mMouseYlast = event->pos().y() - mMouseYlast;
 
-        if (mMouseXlast != 0)
-            dynamic_cast<Renderer*>(mRenderer)->mCamera.yaw(-mCameraRotateSpeed * mMouseXlast);
+        //if (mMouseXlast != 0)
+        //    dynamic_cast<Renderer*>(mRenderer)->mCamera.yaw(-mCameraRotateSpeed * mMouseXlast);
         if (mMouseYlast != 0)
             dynamic_cast<Renderer*>(mRenderer)->mCamera.pitch(-mCameraRotateSpeed * mMouseYlast);
     }
@@ -215,10 +215,21 @@ void VulkanWindow::mouseMoveEvent(QMouseEvent *event)
 
 void VulkanWindow::handleInput()
 {
-    //Camera
+    // CAMERA MOVEMENT
+
     mCamera->setSpeed(0.f);  //cancel last frame movement
-    if (mInput.RMB)
+
+    // Camera movement uniform with player movement
+
+
+    // Camera independent movement
+    if(mInput.RMB)
     {
+        if (mInput.Q)
+            mCamera->updateHeigth(mCameraSpeed);
+        if (mInput.E)
+            mCamera->updateHeigth(-mCameraSpeed);
+    } else{
         if (mInput.W)
             mCamera->setSpeed(mCameraSpeed);
         if (mInput.S)
@@ -227,9 +238,26 @@ void VulkanWindow::handleInput()
             mCamera->moveRight(-mCameraSpeed);
         if (mInput.A)
             mCamera->moveRight(mCameraSpeed);
-        if (mInput.Q)
-            mCamera->updateHeigth(mCameraSpeed);
-        if (mInput.E)
-            mCamera->updateHeigth(-mCameraSpeed);
     }
+
+
+    // PLAYER MOVEMENT
+
+    // Using the camera movement to make them move within the same constraints
+    if (mInput.W)
+        dynamic_cast<Renderer*>(mRenderer)->mObjects.at(2)->move(0.0f, 0.f, -mCameraSpeed);
+    //dynamic_cast<Renderer*>(mRenderer)->mObjects.at(2)->rotate(0, 0, 0, 0);
+    if (mInput.S)
+        dynamic_cast<Renderer*>(mRenderer)->mObjects.at(2)->move(0.0f, 0.f, mCameraSpeed);
+    //dynamic_cast<Renderer*>(mRenderer)->mObjects.at(2)->rotate(180, 0, 0, 0);
+    if (mInput.D)
+        dynamic_cast<Renderer*>(mRenderer)->mObjects.at(2)->move(mCameraSpeed, 0.f, 0.0f);
+    //dynamic_cast<Renderer*>(mRenderer)->mObjects.at(2)->rotate(90, 0, 0, 0);
+    if (mInput.A)
+        dynamic_cast<Renderer*>(mRenderer)->mObjects.at(2)->move(-mCameraSpeed, 0.f, 0.0f);
+    //dynamic_cast<Renderer*>(mRenderer)->mObjects.at(2)->rotate(270, 0, 0, 0);
+    //if (mInput.Q)
+    //    dynamic_cast<Renderer*>(mRenderer)->mObjects.at(2)->move(-0.1f);
+    //if (mInput.E)
+    //    dynamic_cast<Renderer*>(mRenderer)->mObjects.at(2)->move(-0.1f);
 }

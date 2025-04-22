@@ -4,6 +4,7 @@
 #include <fstream>
 #include "VulkanWindow.h"
 #include "WorldAxis.h"
+#include "player.h"
 #include "Texture.h"
 #include "Triangle.h"
 #include "TriangleSurface.h"
@@ -29,6 +30,7 @@ Renderer::Renderer(QVulkanWindow *w, bool msaa)
     mObjects.push_back(new Triangle());
     //mObjects.push_back((new TriangleSurface()));
     mObjects.push_back((new WorldAxis()));
+    mObjects.push_back(new Player());
 
     mObjects.push_back(new HeightMap());
 
@@ -36,10 +38,13 @@ Renderer::Renderer(QVulkanWindow *w, bool msaa)
     mObjects.at(0)->setName("tri");
     //mObjects.at(1)->setName("quad");
     mObjects.at(1)->setName("axis");
+    mObjects.at(2)->setName("player");
 
-    mObjects.at(2)->setName("map");
+    mObjects.at(3)->setName("map");
 
-    static_cast<HeightMap*>(mObjects.at(2))->makeMap("C:\\Users\\edvar\\Documents\\GitHub\\qtvulkan-course-code-Edvard-A\\Assets\\hund.bmp");
+    mObjects.at(0)->move(0.f, 100.f, 0.f);
+
+    static_cast<HeightMap*>(mObjects.at(3))->makeMap("C:\\Users\\edvar\\Documents\\GitHub\\qtvulkan-course-code-Edvard-A\\Assets\\hund.bmp");
 
     // **************************************
     // Legger inn objekter i map
@@ -49,7 +54,8 @@ Renderer::Renderer(QVulkanWindow *w, bool msaa)
         mMap.insert(std::pair<std::string, VisualObject*>{(*it)->getName(),*it});
 
 	//Inital position of the camera
-    mCamera.setPosition(QVector3D(-0.5, -0.5, -8));
+    mCamera.setPosition(QVector3D(-0.5, -15, -25));
+    mCamera.pitch(30.f);
 
     //Need access to our VulkanWindow so making a convenience pointer
     mVulkanWindow = dynamic_cast<VulkanWindow*>(w);
@@ -341,7 +347,7 @@ void Renderer::startNextFrame()
         setModelMatrix((*it)->getMatrix()); //mvp);
         
         // Bind the texture descriptor set
-		setTexture(mTextureHandle, commandBuffer);
+        setTexture(mTextureHandle, commandBuffer);
         
         mDeviceFunctions->vkCmdBindVertexBuffers(commandBuffer, 0, 1, &(*it)->getVBuffer(), &vbOffset);
 		//Check if we have an index buffer - if so, use Indexed draw
