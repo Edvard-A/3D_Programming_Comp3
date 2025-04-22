@@ -27,9 +27,13 @@ void HeightMap::makeMap(unsigned char* data, int mapWidth, int mapHeight)
 
     unsigned short width = mapWidth;
     unsigned short depth = mapHeight;
+    //qDebug() << width;
+    //qDebug() << depth;
 
     float vertexXStart{ 0.f - width * horizontalSpacing / 2 };            // if world origo should be at center use: {0.f - width * horisontalSpacing / 2};
     float vertexZStart{ 0.f + depth * horizontalSpacing / 2 };
+    //float vertexXStart = 0.f;
+    //float vertexZStart = 0.f;
 
     for(int d = 0; d < depth; d++)
     {
@@ -50,16 +54,19 @@ void HeightMap::makeMap(unsigned char* data, int mapWidth, int mapHeight)
         }
     }
 
+
     for(int d = 0; d < depth - 1; d++)
     {
         for(int w = 0; w < width - 1; w++)
         {
             mIndices.emplace_back(w + d * width);
-            mIndices.emplace_back(w + d * width + width + 1);
+            //qDebug() << w + d * width;
             mIndices.emplace_back(w + d * width + width);
+            mIndices.emplace_back(w + d * width + width + 1);
             mIndices.emplace_back(w + d * width);
-            mIndices.emplace_back(w + d * width + 1);
             mIndices.emplace_back(w + d * width * width + 1);
+            mIndices.emplace_back(w + d * width + 1);
+
         }
     }
 }
