@@ -22,7 +22,7 @@ void HeightMap::makeMap(unsigned char* data, int mapWidth, int mapHeight)
 {
     // spacings and placement
     float horizontalSpacing = 0.2f;
-    float verticalSpacing = 0.02f;
+    float verticalSpacing = 0.05f;
     float heightOffset = -10.f;
 
     unsigned short width = mapWidth;
@@ -63,9 +63,14 @@ void HeightMap::makeMap(unsigned char* data, int mapWidth, int mapHeight)
             //qDebug() << w + d * width;
             mIndices.emplace_back(w + d * width + width);
             mIndices.emplace_back(w + d * width + width + 1);
+
             mIndices.emplace_back(w + d * width);
-            mIndices.emplace_back(w + d * width * width + 1);
+            mIndices.emplace_back(w + d * width + width + 1);
             mIndices.emplace_back(w + d * width + 1);
+            //mIndices.emplace_back(w + d * width);
+            //mIndices.emplace_back(w + d * width + 1);
+            //mIndices.emplace_back(w + d * width * width + 1);
+            //mIndices.emplace_back(w + d * width + 1);
 
         }
     }

@@ -44,7 +44,8 @@ Renderer::Renderer(QVulkanWindow *w, bool msaa)
 
     mObjects.at(0)->move(0.f, 100.f, 0.f);
 
-    static_cast<HeightMap*>(mObjects.at(3))->makeMap("C:\\Users\\edvar\\Documents\\GitHub\\qtvulkan-course-code-Edvard-A\\Assets\\hund.bmp");
+    //static_cast<HeightMap*>(mObjects.at(3))->makeMap("C:\\Users\\edvar\\Documents\\HINN\\3D_Programming\\Comp3\\3D_Programming_Comp3\\Assets\\hundA.bmp");
+    static_cast<HeightMap*>(mObjects.at(3))->makeMap("../../Assets/hund.bmp");
 
     // **************************************
     // Legger inn objekter i map
