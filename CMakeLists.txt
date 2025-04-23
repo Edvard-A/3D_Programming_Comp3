@@ -24,6 +24,7 @@ qt_add_executable(3D_Programming_Comp3
     stb_image.cpp
     heightmap.h heightmap.cpp
     player.h player.cpp
+    collisionhandler.h collisionhandler.cpp
 )
 # Define the shader files
 set(SHADER_FILES

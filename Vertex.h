@@ -6,6 +6,8 @@
 
 #include <iostream>
 
+//void createVertex(float x, float y, float z);
+
 struct  Vertex {
     float x;    //Position
     float y;

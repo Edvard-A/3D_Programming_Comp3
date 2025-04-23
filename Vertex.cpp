@@ -18,3 +18,8 @@ std::istream& operator>> (std::istream& is, Vertex& v) {
     is >> dum >> v.u >> dum2 >> v.v >> dum3;
     return is;
 }
+
+//void Vertex::createVertex(float x, float y, float z)
+//{
+//    Vertex{x, y, z, 0, 0, 0, 0, 0};
+//}
