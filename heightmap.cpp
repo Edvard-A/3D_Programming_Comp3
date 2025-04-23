@@ -75,3 +75,64 @@ void HeightMap::makeMap(unsigned char* data, int mapWidth, int mapHeight)
         }
     }
 }
+
+float HeightMap::calculateCoordinates(QVector2D& p, QVector3D& a, QVector3D& b, QVector3D& c)
+{
+    QVector2D aTo2D(a.x(), a.z()); // Fetching the x and z coordinate of the 3D vector
+    QVector2D bTo2D(b.x(), b.z());
+    QVector2D cTo2D(c.x(), c.z());
+
+    QVector2D v0 = bTo2D - aTo2D; // Getting the distance between each point and a as per barycentric coordinate calculations
+    QVector2D v1 = cTo2D - aTo2D;
+    QVector2D v2 = p - aTo2D;
+
+    float d00 = QVector2D::dotProduct(v0, v0);
+    float d01 = QVector2D::dotProduct(v0, v1);
+    float d11 = QVector2D::dotProduct(v1, v1);
+    float d20 = QVector2D::dotProduct(v2, v0);
+    float d21 = QVector2D::dotProduct(v2, v1);
+
+    float v = ((d11 * d20) - (d01 * d21));
+    float w = ((d00 * d21) - (d01 * d20));
+    float u = 1.f - v - w;                  // the sum of all three points equals 1, we only need two points to calculate all of them
+
+    return u * a.y() + v * b.y() + w *c.y();
+}
+
+float HeightMap::getHeight(float worldX, float worldZ)
+{
+    float horizontalSpacing = 0.5f;
+
+    int gridX = static_cast<int>(worldX / horizontalSpacing); // casting the result to int
+    int gridZ = static_cast<int>(worldZ / horizontalSpacing);
+
+    if(gridX < 0 || gridZ < 0 || gridX >= mWidth - 1 || gridZ >= mHeight - 1)
+    {
+        return 0.f; // out of bounds
+    }
+
+    float xCoord = fmod(worldX, horizontalSpacing) / horizontalSpacing;
+    float zCoord = fmod(worldZ, horizontalSpacing) / horizontalSpacing;
+
+    QVector3D a, b, c;
+    int topLeftIndex = gridX + gridZ * mWidth;
+    if(xCoord + zCoord <= 1.f)
+    {
+        // Top-left triangle
+        a = QVector3D(mVertices[topLeftIndex].x, mVertices[topLeftIndex].y, mVertices[topLeftIndex].z);
+        b = QVector3D(mVertices[topLeftIndex + 1].x, mVertices[topLeftIndex + 1].y, mVertices[topLeftIndex + 1].z);
+        c = QVector3D(mVertices[topLeftIndex + mWidth].x, mVertices[topLeftIndex + mWidth].y, mVertices[topLeftIndex + mWidth].z);
+    }
+    else
+    {
+        // Bottom-left triangle
+        a = QVector3D(mVertices[topLeftIndex + 1 + mWidth].x, mVertices[topLeftIndex + 1 + mWidth].y, mVertices[topLeftIndex + 1 + mWidth].z);
+        b = QVector3D(mVertices[topLeftIndex + mWidth].x, mVertices[topLeftIndex + mWidth].y, mVertices[topLeftIndex + mWidth].z);
+        b = QVector3D(mVertices[topLeftIndex + 1].x, mVertices[topLeftIndex + 1].y, mVertices[topLeftIndex + 1].z);
+    }
+
+    QVector2D p(worldX, worldZ);
+    return calculateCoordinates(p, a, b, c);
+
+    return 1.f;
+}

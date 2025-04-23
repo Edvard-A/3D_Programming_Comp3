@@ -31,12 +31,14 @@ public:
     inline QMatrix4x4 getMatrix() const {return mMatrix;}
 	inline std::vector<Vertex> getVertices() const { return mVertices; }
 	inline std::vector<uint32_t> getIndices() const { return mIndices; }
+    inline QVector3D getPosition() { return mPosition; }
 
 protected:
     std::vector<Vertex> mVertices;
     std::vector<uint32_t> mIndices;
     QMatrix4x4 mMatrix;
     std::string mName;
+    QVector3D mPosition;
 
 	BufferHandle mVertexBuffer;
 	BufferHandle mIndexBuffer;

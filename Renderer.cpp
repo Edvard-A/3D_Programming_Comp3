@@ -45,6 +45,8 @@ Renderer::Renderer(QVulkanWindow *w, bool msaa)
     mObjects.at(0)->move(0.f, 100.f, 0.f);
 
     //static_cast<HeightMap*>(mObjects.at(3))->makeMap("C:\\Users\\edvar\\Documents\\HINN\\3D_Programming\\Comp3\\3D_Programming_Comp3\\Assets\\hundA.bmp");
+    //static_cast<HeightMap*>(mObjects.at(3))->makeMap("C:\\Users\\edvar\\Documents\\HINN\\3D_Programming\\Comp3\\3D_Programming_Comp3\\Assets\\Texture1.jpg");
+    //static_cast<HeightMap*>(mObjects.at(3))->makeMap("../../Assets/Heightmap.jpg");
     static_cast<HeightMap*>(mObjects.at(3))->makeMap("../../Assets/hund.bmp");
 
     // **************************************
@@ -321,6 +323,24 @@ void Renderer::startNextFrame()
 {
     //Handeling input from keyboard and mouse is done in VulkanWindow
     //Has to be done each frame to get smooth movement
+
+
+    //static auto lastTime = std::chrono::high_resolution_clock::now();
+    //auto now = std::chrono::high_resolution_clock::now();
+    //float deltaTime = std::chrono::duration<float>(now - lastTime).count();
+    //lastTime = now;
+    //mVulkanWindow->handleInput(deltaTime);
+    //QVector3D posXZ = QVector3D(mObjects.at(2)->getPosition().x(), 0.0f, mObjects.at(2)->getPosition().z());
+    //for (auto obj : mObjects) {
+    //    HeightMap* heightMapObj = static_cast<HeightMap*>(obj);
+    //    if (heightMapObj) {
+    //        float newY = heightMapObj->getHeight(posXZ.x(), posXZ.z());
+    //        float deltaY = newY - mObjects.at(2)->getPosition().y();
+    //        mObjects.at(2)->move(0, deltaY, 0);
+    //    }
+    //}
+    //mCamera.lookAt(mObjects.at(3)->getPosition(), mObjects.at(3)->getPosition(), mObjects.at(3)->getPosition());
+
     mVulkanWindow->handleInput();
     mCamera.update();               //input can have moved the camera
 
