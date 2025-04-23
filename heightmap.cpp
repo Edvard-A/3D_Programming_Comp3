@@ -30,7 +30,7 @@ void HeightMap::makeMap(unsigned char* data, int mapWidth, int mapHeight)
     //qDebug() << width;
     //qDebug() << depth;
 
-    float vertexXStart{ 0.f - width * horizontalSpacing / 2 };            // if world origo should be at center use: {0.f - width * horisontalSpacing / 2};
+    float vertexXStart{ 0.f - width * horizontalSpacing / 2 }; // offsetting the start to have world origin be the center of the map
     float vertexZStart{ 0.f + depth * horizontalSpacing / 2 };
     //float vertexXStart = 0.f;
     //float vertexZStart = 0.f;
@@ -44,12 +44,12 @@ void HeightMap::makeMap(unsigned char* data, int mapWidth, int mapHeight)
 
             mVertices.emplace_back(Vertex
                                    {
-                                       vertexXStart + (w * horizontalSpacing),
-                                       heightFromBitMap,
-                                       vertexZStart - (d * horizontalSpacing),
-                                       0.5f, 0.f, 0.5f,
-                                       w / (width - 1.f),
-                                       d / (depth - 1.f)
+                                       vertexXStart + (w * horizontalSpacing), // x
+                                       heightFromBitMap,                       // y
+                                       vertexZStart - (d * horizontalSpacing), // z
+                                       0.5f, 0.f, 0.5f,                        // RGB
+                                       w / (width - 1.f),                      // u
+                                       d / (depth - 1.f)                       // v
                                    });
         }
     }

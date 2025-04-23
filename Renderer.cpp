@@ -7,7 +7,7 @@
 #include "player.h"
 #include "Texture.h"
 #include "Triangle.h"
-#include "TriangleSurface.h"
+//#include "TriangleSurface.h"
 #include "stb_image.h"
 #include "heightmap.h"
 
@@ -46,6 +46,7 @@ Renderer::Renderer(QVulkanWindow *w, bool msaa)
 
     //static_cast<HeightMap*>(mObjects.at(3))->makeMap("C:\\Users\\edvar\\Documents\\HINN\\3D_Programming\\Comp3\\3D_Programming_Comp3\\Assets\\hundA.bmp");
     //static_cast<HeightMap*>(mObjects.at(3))->makeMap("C:\\Users\\edvar\\Documents\\HINN\\3D_Programming\\Comp3\\3D_Programming_Comp3\\Assets\\Texture1.jpg");
+    //static_cast<HeightMap*>(mObjects.at(3))->makeMap("C:\\Users\\edvar\\Documents\\HINN\\3D_Programming\\Comp3\\3D_Programming_Comp3\\Assets\\Texture3.jpg");
     //static_cast<HeightMap*>(mObjects.at(3))->makeMap("../../Assets/Heightmap.jpg");
     static_cast<HeightMap*>(mObjects.at(3))->makeMap("../../Assets/hund.bmp");
 
@@ -297,6 +298,7 @@ void Renderer::initResources()
     createTextureSampler();
 
     mTextureHandle = createTexture("../../Assets/hund.bmp");
+    //mTextureHandle = createTexture("C:\\Users\\edvar\\Documents\\HINN\3D_Programming\\Comp3\\3D_Programming_Comp3\\Assets\\Mark2.bmp");
 
     getVulkanHWInfo(); // if you want to get info about the Vulkan hardware
 }
@@ -324,12 +326,6 @@ void Renderer::startNextFrame()
     //Handeling input from keyboard and mouse is done in VulkanWindow
     //Has to be done each frame to get smooth movement
 
-
-    //static auto lastTime = std::chrono::high_resolution_clock::now();
-    //auto now = std::chrono::high_resolution_clock::now();
-    //float deltaTime = std::chrono::duration<float>(now - lastTime).count();
-    //lastTime = now;
-    //mVulkanWindow->handleInput(deltaTime);
     //QVector3D posXZ = QVector3D(mObjects.at(2)->getPosition().x(), 0.0f, mObjects.at(2)->getPosition().z());
     //for (auto obj : mObjects) {
     //    HeightMap* heightMapObj = static_cast<HeightMap*>(obj);
