@@ -34,7 +34,7 @@ Renderer::Renderer(QVulkanWindow *w, bool msaa)
     mObjects.push_back(new Player());
 
     mObjects.push_back(new HeightMap());
-    mObjects.push_back(new ObjLoad("suzanne.obj"));
+    mObjects.push_back(new ObjLoad("JT.obj")); // Mesh from Eren :)
 
     // Dag 030225
     mObjects.at(0)->setName("tri");
@@ -44,7 +44,7 @@ Renderer::Renderer(QVulkanWindow *w, bool msaa)
 
     mObjects.at(3)->setName("map");
 
-    mObjects.at(4)->setName("suzanne");
+    mObjects.at(4)->setName("JT");
 
 
     mObjects.at(0)->move(0.f, 100.f, 0.f);
