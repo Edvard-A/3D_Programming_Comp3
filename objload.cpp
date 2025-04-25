@@ -1,4 +1,4 @@
-#include "objload.h".h"
+#include "objload.h"
 #include <fstream>
 #include <iostream>
 #include <sstream>
