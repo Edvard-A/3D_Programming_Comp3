@@ -12,7 +12,10 @@ public:
     void makeMap(std::string filename);
     void makeMap(unsigned char* data, int width, int height);
     float calculateCoordinates(QVector2D& p, QVector3D& a, QVector3D& b, QVector3D& c);
-    float getHeight(float worldX, float worldZ);
+    //float getHeight(float worldX, float worldZ);
+
+    inline int getWidth(){ return mWidth; }
+    inline int getHeight(){ return mHeight; }
 
 private:
     int mWidth{0};

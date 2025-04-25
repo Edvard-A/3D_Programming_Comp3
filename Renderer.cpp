@@ -69,6 +69,8 @@ Renderer::Renderer(QVulkanWindow *w, bool msaa)
 
     //Need access to our VulkanWindow so making a convenience pointer
     mVulkanWindow = dynamic_cast<VulkanWindow*>(w);
+
+
 }
 
 //Automatically called by Qt on Renderer startup
@@ -329,18 +331,32 @@ void Renderer::initSwapChainResources()
 
 void Renderer::startNextFrame()
 {
+
+    //qDebug() << "width is: " << static_cast<HeightMap*>(mObjects.at(3))->getWidth(); //
+    //qDebug() << "height is: " << static_cast<HeightMap*>(mObjects.at(3))->getHeight();
     //Handeling input from keyboard and mouse is done in VulkanWindow
     //Has to be done each frame to get smooth movement
 
     //QVector3D posXZ = QVector3D(mObjects.at(2)->getPosition().x(), 0.0f, mObjects.at(2)->getPosition().z());
     //for (auto obj : mObjects) {
-    //    HeightMap* heightMapObj = static_cast<HeightMap*>(obj);
-    //    if (heightMapObj) {
-    //        float newY = heightMapObj->getHeight(posXZ.x(), posXZ.z());
+    //    HeightMap* heightMapObj = dynamic_cast<HeightMap*>(obj);
+    //    if (mObjects.at(2)) {
+    //        float newY = mObjects.at(2)->getHeight(posXZ.x(), posXZ.z(), mObjects.at(4)->get);
     //        float deltaY = newY - mObjects.at(2)->getPosition().y();
     //        mObjects.at(2)->move(0, deltaY, 0);
     //    }
     //}
+
+    //qDebug() << "Player X position: " << mObjects.at(2)->getPosition().x();
+    QVector3D posXZ = QVector3D(mObjects.at(2)->getPosition().x(), 0.0f, mObjects.at(2)->getPosition().z());
+    qDebug() << "XZ: " << posXZ;
+
+    float newY = mObjects.at(2)->getHeight(posXZ.x(), posXZ.z(), 512, 512, mObjects.at(4)->getVertices());//static_cast<HeightMap*>(mObjects.at(3))->getWidth() - 1, static_cast<HeightMap*>(mObjects.at(3))->getHeight() - 1);
+        //qDebug() << "New Y is: " << newY;
+        //float deltaY = newY - mObjects.at(2)->getPosition().y();
+        //mObjects.at(2)->move(0, deltaY, 0);
+
+
     //mCamera.lookAt(mObjects.at(3)->getPosition(), mObjects.at(3)->getPosition(), mObjects.at(3)->getPosition());
 
     mVulkanWindow->handleInput();
@@ -1253,3 +1269,4 @@ void Renderer::destroyTexture(TextureHandle& textureHandle)
     mDeviceFunctions->vkDestroyImage(mWindow->device(), textureHandle.mImage, nullptr);
 	mDeviceFunctions->vkFreeMemory(mWindow->device(), textureHandle.mTextureMemory, nullptr);
 }
+

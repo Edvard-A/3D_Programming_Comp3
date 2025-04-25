@@ -33,6 +33,9 @@ public:
 	inline std::vector<uint32_t> getIndices() const { return mIndices; }
     inline QVector3D getPosition() { return mPosition; }
 
+    float calculateCoordinates(QVector2D& p, QVector3D& a, QVector3D& b, QVector3D& c);
+    float getHeight(float worldX, float worldZ, int mapWidth, int mapHeight, std::vector<Vertex> mapVertices);
+
 protected:
     std::vector<Vertex> mVertices;
     std::vector<uint32_t> mIndices;
